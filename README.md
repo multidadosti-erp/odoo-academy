@@ -1,2 +1,2 @@
-# odoo-academy
-Odoo academy
+# Odoo Academy
+Odoo Academy
