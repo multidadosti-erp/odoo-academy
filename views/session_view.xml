@@ -1,0 +1,60 @@
+<openerp>
+    <data>
+
+        <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+        <menuitem id="openacademy_root" name="Open Academy" sequence="450"/>
+
+        <record id="view_openacademy_session_form" model="ir.ui.view">
+            <field name="name">odoo.academy.session.form</field>
+            <field name="model">odoo.academy.session</field>
+            <field name="arch" type="xml">
+                <form string="Session">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="instructor_id"/>
+                            <field name="start_data"/>
+                        </group>
+                        <group>
+                            <field name="duration"/>
+                            <field name="seats"/>
+                        </group>
+                        <notebook>
+                            <page string="Estudantes">
+                                <field name="students_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_openacademy_session_tree" model="ir.ui.view">
+            <field name="name">odoo.academy.session.tree</field>
+            <field name="model">odoo.academy.session</field>
+            <field name="arch" type="xml">
+                <tree string="Session">
+                    <field name="name"/>
+                    <field name="instructor_id"/>
+                    <field name="seats"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_openacademy_session" model="ir.actions.act_window">
+            <field name="name">Session</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">odoo.academy.session</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="openacademy_submenu" name="Open Academy"
+                  parent="openacademy_root" sequence="1"/>
+
+        <menuitem id="openacademy_session" name="Session"
+                  parent="openacademy_submenu"
+                  action="action_openacademy_session" sequence="1"/>
+
+
+    </data>
+</openerp>
