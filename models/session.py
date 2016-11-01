@@ -11,6 +11,8 @@ class Session(models.Model):
     start_data = fields.Date(string="Data inicio")
     duration = fields.Integer(string="Duração")
     seats = fields.Integer(string="Cadeiras")
+    course_id = fields.Many2one(comodel_name="odoo.academy.courses",
+                                 string="Courses")
 
     instructor_id = fields.Many2one(comodel_name="res.partner",
                                     string="Instrutor")
