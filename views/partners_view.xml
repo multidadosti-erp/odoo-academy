@@ -1,0 +1,27 @@
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="partner_instructor_form_view">
+            <field name="name">partner.student</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='title']" position="after">
+                    <!-- Add your fields or attributes here -->
+
+                    <field name="is_student"/>
+                </xpath>
+                <!--<notebook>-->
+                    <!--<page>-->
+                        <!--<group>-->
+                            <!--<field name="is_student"/>-->
+                            <!--<field name="session_id"/>-->
+                        <!--</group>-->
+                    <!--</page>-->
+                <!--</notebook>-->
+            </field>
+        </record>
+
+    </data>
+</openerp>

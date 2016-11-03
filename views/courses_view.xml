@@ -8,8 +8,12 @@
                     <sheet>
                         <group>
                             <field name="name"/>
-                            <field name="sessions_ids"/>
                         </group>
+                        <notebook>
+                            <page string="Aulas">
+                                <field name="sessions_ids"/>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>

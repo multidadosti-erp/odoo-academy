@@ -18,6 +18,7 @@
                         <group>
                             <field name="duration"/>
                             <field name="seats"/>
+                            <field name="occupied_seats"/>
                         </group>
                         <notebook>
                             <page string="Estudantes">

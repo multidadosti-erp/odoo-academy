@@ -9,5 +9,5 @@ class Courses(models.Model):
 
     name = fields.Char(string="Nome", required=True)
 
-    sessions_ids = fields.Many2many('odoo.academy.session', string="Cursos")
+    sessions_ids = fields.Many2many('odoo.academy.session', string="Aulas")
 

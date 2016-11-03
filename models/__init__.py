@@ -2,3 +2,4 @@
 
 from . import session
 from . import courses
+from . import partners
