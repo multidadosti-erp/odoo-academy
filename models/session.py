@@ -14,7 +14,9 @@ class Session(models.Model):
     seats = fields.Integer(string="Cadeiras")
     tel = fields.Char()
     email = fields.Char()
-    local_street = fields.Char()
+    company = fields.Char()
+    l_title = fields.Many2one(related="instructor_id.title")
+
 
     instructor_id = fields.Many2one(comodel_name="res.partner",
                                     string="Instrutor",
@@ -34,8 +36,8 @@ class Session(models.Model):
     @api.onchange('instructor_id')
     def _update_end(self):
         for s in self:
-            if s.instructor_id:
-                s.local_street = s.instructor_id.street
+            s.company = self.env['res.partner'].search([('name', '=', self.instructor_id.name)]).parent_id.name
+            # instructor_id.parent_id.name
 
     @api.constrains('students_ids')
     def _check_seats(self):
