@@ -10,16 +10,26 @@
             <field name="arch" type="xml">
                 <form string="Session">
                     <sheet>
-                        <group>
-                            <field name="name"/>
-                            <field name="instructor_id"/>
-                            <field name="start_data"/>
-                        </group>
-                        <group>
-                            <field name="duration"/>
-                            <field name="seats"/>
-                            <field name="occupied_seats"/>
-                        </group>
+                        <div class="oe_left">
+                            <group>
+                                <field name="name"/>
+                                <field name="instructor_id"/>
+                                <field name="start_data"/>
+                            </group>
+                            <group>
+                                <field name="duration"/>
+                                <field name="seats"/>
+                                <field name="occupied_seats"/>
+                            </group>
+                        </div>
+                        <div class="oe_right">
+                            <button string="Buscar" type="object" name="search_attr_instructor" class="oe_highlight"/>
+                            <group>
+                                <field name="Telefone"/>
+                                <field name="Email"/>
+                            </group>
+                        </div>
+
                         <notebook>
                             <page string="Estudantes">
                                 <field name="students_ids"/>

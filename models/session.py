@@ -12,6 +12,8 @@ class Session(models.Model):
     start_data = fields.Date(string="Data inicio")
     duration = fields.Integer(string="Duração")
     seats = fields.Integer(string="Cadeiras")
+    Telefone = fields.Char()
+    Email = fields.Char()
 
     instructor_id = fields.Many2one(comodel_name="res.partner",
                                     string="Instrutor",
@@ -21,7 +23,7 @@ class Session(models.Model):
                                    inverse_name="session_id",
                                    string="Estudantes")
 
-    occupied_seats = fields.Integer(String="Cadeiras Restantes", compute='_occupied_seats')
+    occupied_seats = fields.Integer(string="Cadeiras Restantes", compute='_occupied_seats')
 
     @api.depends('seats', 'students_ids')
     def _occupied_seats(self):
@@ -33,3 +35,8 @@ class Session(models.Model):
         for record in self:
             if record.occupied_seats < 0:
                 raise ValidationError("Não há mais cadeiras disponíveis!")
+
+    @api.one
+    def search_attr_instructor(self):
+        if self.instructor_id:
+            self.write({'Telefone': self.instructor_id.phone, 'Email': self.instructor_id.email})
