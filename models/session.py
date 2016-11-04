@@ -15,6 +15,7 @@ class Session(models.Model):
     tel = fields.Char()
     email = fields.Char()
     company = fields.Char()
+    course = fields.Char(string="Nome do Curso")
     l_title = fields.Many2one(related="instructor_id.title")
 
 
@@ -37,7 +38,6 @@ class Session(models.Model):
     def _update_end(self):
         for s in self:
             s.company = self.env['res.partner'].search([('name', '=', self.instructor_id.name)]).parent_id.name
-            # instructor_id.parent_id.name
 
     @api.constrains('students_ids')
     def _check_seats(self):
@@ -49,3 +49,8 @@ class Session(models.Model):
     def search_attr_instructor(self):
         if self.instructor_id:
             self.write({'tel': self.instructor_id.phone, 'email': self.instructor_id.email})
+
+    @api.one
+    def submit_new_course(self):
+        if self.course:
+            self.env['odoo.academy.courses'].create({'name': self.course})

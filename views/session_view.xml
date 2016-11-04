@@ -36,7 +36,12 @@
                             <page string="Estudantes">
                                 <field name="students_ids"/>
                             </page>
+                            <page class="oe_edit_only" string="Cursos">
+                                <field name="course"/>
+                                <button string="Cadastrar" type="object" name="submit_new_course" class="oe_highlight oe_edit_only"/>
+                            </page>
                         </notebook>
+
                     </sheet>
                 </form>
             </field>
