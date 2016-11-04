@@ -12,8 +12,9 @@ class Session(models.Model):
     start_data = fields.Date(string="Data inicio")
     duration = fields.Integer(string="Duração")
     seats = fields.Integer(string="Cadeiras")
-    Telefone = fields.Char()
-    Email = fields.Char()
+    tel = fields.Char()
+    email = fields.Char()
+    local_street = fields.Char()
 
     instructor_id = fields.Many2one(comodel_name="res.partner",
                                     string="Instrutor",
@@ -30,6 +31,12 @@ class Session(models.Model):
         for s in self:
             s.occupied_seats = s.seats - len(s.students_ids)
 
+    @api.onchange('instructor_id')
+    def _update_end(self):
+        for s in self:
+            if s.instructor_id:
+                s.local_street = s.instructor_id.street
+
     @api.constrains('students_ids')
     def _check_seats(self):
         for record in self:
@@ -39,4 +46,4 @@ class Session(models.Model):
     @api.one
     def search_attr_instructor(self):
         if self.instructor_id:
-            self.write({'Telefone': self.instructor_id.phone, 'Email': self.instructor_id.email})
+            self.write({'tel': self.instructor_id.phone, 'email': self.instructor_id.email})
