@@ -2,6 +2,7 @@
 
 from openerp import fields, models, api
 from openerp.exceptions import ValidationError
+import time
 
 
 class Session(models.Model):
@@ -9,7 +10,7 @@ class Session(models.Model):
     _name = 'odoo.academy.session'
 
     name = fields.Char(string="Nome", required=True)
-    start_data = fields.Date(string="Data inicio")
+    start_data = fields.Date(string="Data inicio", inverse="_set_data_session")
     duration = fields.Integer(string="Duração")
     seats = fields.Integer(string="Cadeiras")
     tel = fields.Char()
@@ -17,6 +18,7 @@ class Session(models.Model):
     company = fields.Char()
     course = fields.Char(string="Nome do Curso")
     l_title = fields.Many2one(related="instructor_id.title")
+    period = fields.Selection([(u'manhã', 'Manhã'), (u'tarde', 'Tarde'), (u'noite', 'Noite')])
 
 
     instructor_id = fields.Many2one(comodel_name="res.partner",
@@ -54,3 +56,7 @@ class Session(models.Model):
     def submit_new_course(self):
         if self.course:
             self.env['odoo.academy.courses'].create({'name': self.course})
+
+    def _set_data_session(self):
+        if not self.start_data:
+            self.write({'start_data': fields.date.today()})

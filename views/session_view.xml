@@ -29,6 +29,7 @@
                             <group>
                                 <field name="tel" string="Telefone"/>
                                 <field name="email" string="Email"/>
+                                <field name="period" string="Período"/>
                             </group>
                         </div>
 
