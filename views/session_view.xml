@@ -9,6 +9,9 @@
             <field name="model">odoo.academy.session</field>
             <field name="arch" type="xml">
                 <form string="Session">
+                    <header>
+                        <field name="status" widget="statusbar"/>
+                    </header>
                     <sheet>
                         <div class="oe_left">
                             <group>
@@ -17,6 +20,7 @@
                                 <field name="company" string="Companhia"/>
                                 <field name="l_title" string="Titulo"/>
                                 <field name="start_data"/>
+                                <field name="finish_data"/>
                             </group>
                             <group>
                                 <field name="duration"/>

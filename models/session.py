@@ -11,6 +11,7 @@ class Session(models.Model):
 
     name = fields.Char(string="Nome", required=True)
     start_data = fields.Date(string="Data inicio", inverse="_set_data_session")
+    finish_data = fields.Date(string="Data término")
     duration = fields.Integer(string="Duração")
     seats = fields.Integer(string="Cadeiras")
     tel = fields.Char()
@@ -19,7 +20,7 @@ class Session(models.Model):
     course = fields.Char(string="Nome do Curso")
     l_title = fields.Many2one(related="instructor_id.title")
     period = fields.Selection([(u'manhã', 'Manhã'), (u'tarde', 'Tarde'), (u'noite', 'Noite')])
-
+    status = fields.Selection([(u'ainiciar', 'Não Iniciada'), (u'execução', 'Em Execução'), (u'finalizada', 'Finalizada')], compute='_set_status_session')
 
     instructor_id = fields.Many2one(comodel_name="res.partner",
                                     string="Instrutor",
@@ -35,6 +36,20 @@ class Session(models.Model):
     def _occupied_seats(self):
         for s in self:
             s.occupied_seats = s.seats - len(s.students_ids)
+
+    @api.depends('start_data', 'finish_data')
+    def _set_status_session(self):
+        for st in self:
+            if st.start_data:
+                if fields.Date.from_string(st.start_data) > fields.Date.from_string(fields.Date.today()):
+                    # self.write({'status': u'ainiciar'})
+                    st.status = u'ainiciar'
+                if fields.Date.from_string(st.start_data) <= fields.Date.from_string(fields.Date.today()):
+                    # self.write({'status': u'execução'})
+                    st.status = u'execução'
+                if st.finish_data and fields.Date.from_string(st.start_data) < fields.Date.from_string(fields.Date.today()):
+                    # self.write({'status': u'finalizada'})
+                    st.status = u'finalizada'
 
     @api.onchange('instructor_id')
     def _update_end(self):
