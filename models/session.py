@@ -42,14 +42,14 @@ class Session(models.Model):
         for st in self:
             if st.start_data:
                 if fields.Date.from_string(st.start_data) > fields.Date.from_string(fields.Date.today()):
-                    # self.write({'status': u'ainiciar'})
+                    # st.write({'status': u'ainiciar'})
                     st.status = u'ainiciar'
-                if fields.Date.from_string(st.start_data) <= fields.Date.from_string(fields.Date.today()):
-                    # self.write({'status': u'execução'})
-                    st.status = u'execução'
-                if st.finish_data and fields.Date.from_string(st.start_data) < fields.Date.from_string(fields.Date.today()):
-                    # self.write({'status': u'finalizada'})
+                elif st.finish_data and fields.Date.from_string(st.finish_data) < fields.Date.from_string(fields.Date.today()):
+                    # st.write({'status': u'finalizada'})
                     st.status = u'finalizada'
+                elif fields.Date.from_string(st.start_data) <= fields.Date.from_string(fields.Date.today()):
+                    # st.write({'status': u'execução'})
+                    st.status = u'execução'
 
     @api.onchange('instructor_id')
     def _update_end(self):

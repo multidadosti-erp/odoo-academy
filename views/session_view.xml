@@ -13,28 +13,36 @@
                         <field name="status" widget="statusbar"/>
                     </header>
                     <sheet>
-                        <div class="oe_left">
-                            <group>
-                                <field name="name"/>
-                                <field name="instructor_id"/>
-                                <field name="company" string="Companhia"/>
-                                <field name="l_title" string="Titulo"/>
-                                <field name="start_data"/>
-                                <field name="finish_data"/>
-                            </group>
-                            <group>
-                                <field name="duration"/>
-                                <field name="seats"/>
-                                <field name="occupied_seats"/>
-                            </group>
+                        <div class="oe_left" style="width: 100%">
+                            <div class="oe_inline" style="width: 47%; float: left; margin:0 3%">
+                                <group>
+                                    <field name="name"/>
+                                    <field name="instructor_id"/>
+                                    <field name="company" string="Companhia"/>
+                                    <field name="l_title" string="Titulo"/>
+                                    <field name="start_data"/>
+                                    <field name="finish_data"/>
+                                </group>
+                            </div>
+                            <div class="oe_inline" style="float: left; width: 47%; margin:0 3%">
+                                <group>
+                                    <field name="duration"/>
+                                    <field name="seats"/>
+                                    <field name="occupied_seats"/>
+                                </group>
+                            </div>
                         </div>
-                        <div class="oe_right">
-                            <button string="Buscar" type="object" name="search_attr_instructor" class="oe_highlight"/>
-                            <group>
-                                <field name="tel" string="Telefone"/>
-                                <field name="email" string="Email"/>
-                                <field name="period" string="Período"/>
-                            </group>
+                        <div>
+                            <div style="display: table; float: left; width: 47%; margin: 3%">
+                                <group>
+                                    <field name="tel" string="Telefone"/>
+                                    <field name="email" string="Email"/>
+                                    <field name="period" string="Período"/>
+                                </group>
+                            </div>
+                            <div>
+                                <button string="Buscar" type="object" name="search_attr_instructor" class="oe_highlight" style="float: left; display: table;margin: 3%"/>
+                            </div>
                         </div>
 
                         <notebook>
