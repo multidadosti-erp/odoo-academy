@@ -214,3 +214,67 @@ __*related*__: torna o campo diretamente relacionado a alterações em outra mod
 ```
 
 ##Módulo Locadora
+
+Construa as models Categoria, Filme, OperacaoUnit, OperacaoConj e Cliente
+
+* **Cliente:**
+    * filme_ids - many2many
+    * operacaoconj_ids - one2many
+    * valor_gasto - float(será um campo *compute*)
+* **Categoria:**
+    * nome - char
+    * filme_ids - many2many
+* **Filme:**
+    * titulo - char
+    * categoria_ids - many2many
+    * valor - float
+    * descrição - text
+    * data - date
+    * quantidade - int
+    * autor - char
+* **OperacaoUnit:**
+    * operacaounit_id - many2one
+    * tipo - select [venda, aluguel]
+    * preco - float(será um campo *compute*)
+    * filme_ids - many2many
+    * status - select [indisponível, em espera, disponível, atrasado](será um campo *compute*)
+    * dataOperacao - date
+    * dataEntrega - date(o campo em questão só fica aberto a escrita quando tipo(OperacaoUnit) é aluguel)
+* **OperacaoConj:**
+    * operacaounit_ids - one2many
+    * cliente_id - many2one
+    * valor - float(será um campo *compute*)
+    
+######Observações sobre alguns campos:
+-O campo  valor em OperacaoConj deve ser a soma de todos os preços definidos em instancias associadas de OperacaoUnit, será necessário utilizar o módulo api, mais especificamente o decorator api.depends(*mais detalhes sobre os decorator de api na [documentação](https://www.odoo.com/documentation/8.0/reference/orm.html#module-openerp.api)
+
+-O campo  valor_gasto em Cliente deve ser a soma de todos os valores definidos em instancias associadas de OperacaoConj
+
+-Assim como foi dito acima, o campo preco(OperacaoUnit) é dependente direto de tipo(OperacaoUnit), dataEntrega(OperacaoUnit), e data(Filme), será necessário utilizar o módulo api, mais especificamente o decorator api.depends(*mais detalhes sobre os decorator de api na [documentação](https://www.odoo.com/documentation/8.0/reference/orm.html#module-openerp.api)*)
+        
+*Para mais detalhes de como manusear campos relacionais (one2many, many2one, many2many, visite a [documentação oficial](https://www.odoo.com/documentation/8.0/reference/orm.html#relational-fields), ou observe um [caso de uso](https://www.odoo.com/documentation/8.0/howtos/backend.html) fornecido pelo odoo com exemplos de uso para cada campo relacional).*
+
+####Detalhes do funcionamento do módulo
+
+*  Ao salvar uma operaçãoUnit com tipo aluguel(alugar um filme), definir o preço como R$4,00 caso for lançamento(com campo data de no maximo 3 meses de diferença da data atual), senão definir preço como R$2,00.
+
+* O prazo de entrega do filme é de 2 dias, caso haja atraso, cobrar juros simples de 50% do valor definido em preço(OperacaoUnit) por dia de atraso.
+
+* Caso a operação seja do tipo venda, cobrar no filme um valor de 30% a mais do seu valor(Filme), e logicamente decrescer a quantidade do estoque.
+
+* Ao criar uma OperacaoUnit o campo dataOperacao recebe a data atual.
+
+* Ao alugar filme, este fica temporariamente fora de estoque, até ser devolvido(decrescido do estoque)
+
+* Campo status deve ser um workflow com as opções que foram descritas na criação da model, os status a seguir terão os seguintes botões para edição de status.
+    * Alugar - somente em status 'Disponível'
+    * Vender - somente em status 'Disponível'
+    * Concluir - somente em status 'Em espera' ou 'Atrasado'
+
+* A definição do status exibido por OperacaoUnit depende de algumas condições.
+    * Indisponível - quando não há cópias do filme em estoque, ou alugadas.
+    * Em espera - quando não há cópias em estoque porém existe cópias alugadas dentro do prazo de entrega, neste caso deve ser exibida a data de entrega da cópia do filme que foi alugada com data de entrega mais proxima da data atual(dentro do campo dataEntrega).
+    * Atrasado - quando não há cópias em estoque porém existem cópias alugadas dentro fora do prazo de entrega, neste caso esse status é exclusivo de OperacaoUnit que ainda estão a ser feitas(que ainda não foram criadas).
+    * Disponível - quando há cópias em estoque, diponíveis para operações(venda ou aluguel)
+    
+*Na documentação oficial há um exemplo de como criar um workflow completo segue o [link](https://www.odoo.com/documentation/8.0/howtos/backend.html#workflows))*
