@@ -5,7 +5,7 @@ A aplicação tera funcionalidades como a criação de cursos, alocação de aul
 
 #####Estrutura básica do módulo:
 
-```
+```bash
 ├── __init__.py
 ├── __openerp__.py
 ├── models
@@ -20,8 +20,8 @@ A aplicação tera funcionalidades como a criação de cursos, alocação de aul
 ```
 `__init__.py`: Este arquivo permite transformar a pasta em que esta alocado em módulo(estrutura que irá agrupar os arquivos presentes, facilitando na imporatação)
 
-```
-/*Arquivo __init__ localizado em models*/
+```python
+#Arquivo __init__ localizado em models
 from . import courses
 from . import partners
 from . import session
@@ -29,7 +29,7 @@ from . import session
 
 `__openerp__.py`: Este arquivo permite funciona como manifesto do módulo, nele estão informações sobre a aplicação e especificações de dependências e views.
 
-```
+```python
 {
     'name': 'Nome Módulo'
     'version': 'Versão Módulo'
@@ -51,7 +51,7 @@ from . import session
 
 #####Modelo básico de uma model:
 
-```
+```python
 from openerp import fields, models, api
 
 Class Model1(models.Model):
@@ -83,7 +83,7 @@ Class Model1(models.Model):
 ```
 Os campos mostrados acima são opções que podem ser implementadas nos formulários que serão montados. dentro desses campos há diversas opções de __atributos__, que podem customizar sua aparência ou relaciona-los a gatilhos(openerp.api). 
 
-```
+```python
     name = fields.Char(
         string="Name",                   
         compute="_compute_name_custom",  
@@ -120,7 +120,7 @@ __*related*__: torna o campo diretamente relacionado a alterações em outra mod
 
 #####Estrutura básica de uma view
 
-```
+```xml
 <openerp>
     <data>
     
