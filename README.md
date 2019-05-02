@@ -1,9 +1,10 @@
-#Odoo Academy
-####Criação do Módulo Odoo Academy
+# Odoo Academy
+
+#### Criação do Módulo Odoo Academy
 
 A aplicação tera funcionalidades como a criação de cursos, alocação de aulas dentro desses cursos, estas que terão alunos e professores associados,terão data de inicio e término, vagas disponíveis e duração.
 
-#####Estrutura básica do módulo:
+##### Estrutura básica do módulo:
 
 ```bash
 ├── __init__.py
