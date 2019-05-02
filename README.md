@@ -46,11 +46,11 @@ from . import session
 }
 ```
 
-####Criação das Models Session, Courses e Partners
+#### Criação das Models Session, Courses e Partners
 
 -Dentro das models serão especificados os campos a serem exibidos nas views, especificação de dependencias nesses campos, os comportamentos/métodos executados, bem como seus gatilhos.
 
-#####Modelo básico de uma model:
+##### Modelo básico de uma model:
 
 ```python
 from openerp import fields, models, api
@@ -115,11 +115,11 @@ __*company_dependent*__: Transforma o campo dependente a compania de registro, u
 __*default*__: Define um valor padrão para o campo.<br>
 __*related*__: torna o campo diretamente relacionado a alterações em outra model.<br>
 
-####Criação das Views de Session, Courses e Partners
+#### Criação das Views de Session, Courses e Partners
 
 -Dentro das views serão alocados os campos criados nas models, e por meio de tags, customizar sua exibição/posicionamento.
 
-#####Estrutura básica de uma view
+##### Estrutura básica de uma view
 
 ```xml
 <openerp>
@@ -214,7 +214,7 @@ __*related*__: torna o campo diretamente relacionado a alterações em outra mod
 </openerp>
 ```
 
-##Módulo Locadora
+## Módulo Locadora
 
 Construa as models Categoria, Filme, OperacaoUnit, OperacaoConj e Cliente
 
@@ -246,7 +246,7 @@ Construa as models Categoria, Filme, OperacaoUnit, OperacaoConj e Cliente
     * cliente_id - many2one
     * valor - float(será um campo *compute*)
     
-######Observações sobre alguns campos:
+##### Observações sobre alguns campos:
 -O campo  valor em OperacaoConj deve ser a soma de todos os preços definidos em instancias associadas de OperacaoUnit, será necessário utilizar o módulo api, mais especificamente o decorator api.depends(*mais detalhes sobre os decorator de api na [documentação](https://www.odoo.com/documentation/8.0/reference/orm.html#module-openerp.api)
 
 -O campo  valor_gasto em Cliente deve ser a soma de todos os valores definidos em instancias associadas de OperacaoConj
@@ -255,7 +255,7 @@ Construa as models Categoria, Filme, OperacaoUnit, OperacaoConj e Cliente
         
 *Para mais detalhes de como manusear campos relacionais (one2many, many2one, many2many, visite a [documentação oficial](https://www.odoo.com/documentation/8.0/reference/orm.html#relational-fields), ou observe um [caso de uso](https://www.odoo.com/documentation/8.0/howtos/backend.html) fornecido pelo odoo com exemplos de uso para cada campo relacional).*
 
-####Detalhes do funcionamento do módulo
+#### Detalhes do funcionamento do módulo
 
 *  Ao salvar uma operaçãoUnit com tipo aluguel(alugar um filme), definir o preço como R$4,00 caso for lançamento(com campo data de no maximo 3 meses de diferença da data atual), senão definir preço como R$2,00.
 
